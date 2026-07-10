@@ -1,3 +1,6 @@
+
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
 import streamlit as st
 import pickle
 import string
@@ -113,15 +116,20 @@ st.markdown(
 # ---------------------------------------------------------------------------
 @st.cache_resource
 def load_artifacts():
-    tfidf = pickle.load(open("vectorizer.pkl", "rb"))
-    model = pickle.load(open("model.pkl", "rb"))
+    with open(BASE_DIR / "vectorizer.pkl", "rb") as f:
+        tfidf = pickle.load(f)
+
+    with open(BASE_DIR / "model.pkl", "rb") as f:
+        model = pickle.load(f)
+
     return tfidf, model
 
 try:
     tfidf, model = load_artifacts()
     artifacts_loaded = True
-except FileNotFoundError:
+except Exception as e:
     artifacts_loaded = False
+    st.error(f"Unable to load model files.\n\n{e}")
 
 # ---------------------------------------------------------------------------
 # Session state for history / stats
@@ -136,6 +144,8 @@ if "ham_count" not in st.session_state:
 # ---------------------------------------------------------------------------
 # Preprocessing
 # ---------------------------------------------------------------------------
+STOP_WORDS = set(stopwords.words("english"))
+
 def transformed_data(message: str) -> str:
     message = message.lower()
     tokens = nltk.word_tokenize(message)
@@ -143,7 +153,7 @@ def transformed_data(message: str) -> str:
     y = [t for t in tokens if t.isalnum()]
 
     stop_words = set(stopwords.words("english"))
-    y = [t for t in y if t not in stop_words and t not in string.punctuation]
+    y = [t for t in y if t not in STOP_WORDS]
 
     y = [ps.stem(t) for t in y]
 
@@ -216,7 +226,7 @@ if predict_clicked:
     if not input_sms.strip():
         st.warning("Please enter a message first.")
     else:
-        with st.spinner("Analyzing message..."):
+        with st.spinner("🔍 Detecting spam..."):
             transform_sms = transformed_data(input_sms)
             vector_input = tfidf.transform([transform_sms])
             result = model.predict(vector_input)[0]
@@ -225,7 +235,9 @@ if predict_clicked:
             confidence = None
             if hasattr(model, "predict_proba"):
                 proba = model.predict_proba(vector_input)[0]
-                confidence = max(proba) * 100
+            
+            if confidence is not None:
+                st.progress(confidence / 100)
 
         if result == 1:
             st.session_state.spam_count += 1
@@ -261,3 +273,13 @@ if st.session_state.history:
         icon = "🚨" if item["label"] == "Spam" else "✅"
         preview = item["message"][:80] + ("..." if len(item["message"]) > 80 else "")
         st.markdown(f"{icon} **{item['label']}** — _{preview}_")
+        
+
+#----------------------------------------------------------------------------
+# Footer
+#----------------------------------------------------------------------------
+st.markdown("---")
+
+st.caption(
+    "Developed by Sujal Chauhan • Machine Learning Project • Random Forest + TF-IDF"
+)
