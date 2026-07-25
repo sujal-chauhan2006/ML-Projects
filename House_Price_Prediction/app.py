@@ -96,23 +96,12 @@ def load_assets():
         le_property = joblib.load("joblib_files/le_property.joblib")
         area_scaler = joblib.load("joblib_files/area_scaler.joblib")
         bhk_scaler = joblib.load("joblib_files/bhk_scaler.joblib")
+
         return True, model, le_area, le_location, le_property, area_scaler, bhk_scaler
-    except Exception:
-        # Failsafe: Returns Mock Classes so the UI can still be viewed and tested
-        class MockEncoder:
-            def __init__(self, classes): self.classes_ = classes
-            def transform(self, x): return [0]
-            
-        class MockModel:
-            def predict(self, X): 
-                # Simple logic for mock prediction based on inputs
-                return [(X['area_in_sqft'].values[0] * 500 * X['rate_per_sqft'].values[0]) / 1e7]
 
-        return False, MockModel(), MockEncoder(["Super Area", "Carpet Area", "Built-up Area"]), \
-               MockEncoder(["Downtown", "Suburbs", "Uptown", "Industrial"]), \
-               MockEncoder(["Apartment", "Villa", "Commercial", "Studio"]), \
-               MockEncoder([]), MockEncoder([])
-
+    except Exception as e:
+        st.error(f"❌ Model loading failed: {type(e).__name__}: {e}")
+        raise
 is_real_model, model, le_area, le_location, le_property, area_scaler, bhk_scaler = load_assets()
 
 # ==================================================================
