@@ -98,13 +98,13 @@ def load_assets():
         import os
 
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        model = joblib.load("joblib_files/rf.joblib")
-        le_area = joblib.load("joblib_files/le_area.joblib")
-        le_location = joblib.load("joblib_files/le_location.joblib")
-        le_property = joblib.load("joblib_files/le_property.joblib")
-        area_scaler = joblib.load("joblib_files/area_scaler.joblib")
-        bhk_scaler = joblib.load("joblib_files/bhk_scaler.joblib")
 
+        model = joblib.load(os.path.join(BASE_DIR, "joblib_files", "rf.joblib"))
+        le_area = joblib.load(os.path.join(BASE_DIR, "joblib_files", "le_area.joblib"))
+        le_location = joblib.load(os.path.join(BASE_DIR, "joblib_files", "le_location.joblib"))
+        le_property = joblib.load(os.path.join(BASE_DIR, "joblib_files", "le_property.joblib"))
+        area_scaler = joblib.load(os.path.join(BASE_DIR, "joblib_files", "area_scaler.joblib"))
+        bhk_scaler = joblib.load(os.path.join(BASE_DIR, "joblib_files", "bhk_scaler.joblib"))
         return True, model, le_area, le_location, le_property, area_scaler, bhk_scaler
 
     except Exception as e:
