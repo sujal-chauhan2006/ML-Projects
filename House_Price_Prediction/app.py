@@ -83,12 +83,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-import os
 
-st.write("__file__ =", __file__)
-st.write("Current working directory =", os.getcwd())
-st.write("Files in current directory =", os.listdir("."))
-st.write("Files in joblib_files =", os.listdir("joblib_files") if os.path.exists("joblib_files") else "Folder not found")
 # ==================================================================
 #  LOAD ASSETS WITH MOCK FALLBACK (Failsafe)
 # ==================================================================
