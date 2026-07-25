@@ -83,13 +83,21 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+import os
 
+st.write("__file__ =", __file__)
+st.write("Current working directory =", os.getcwd())
+st.write("Files in current directory =", os.listdir("."))
+st.write("Files in joblib_files =", os.listdir("joblib_files") if os.path.exists("joblib_files") else "Folder not found")
 # ==================================================================
 #  LOAD ASSETS WITH MOCK FALLBACK (Failsafe)
 # ==================================================================
 @st.cache_resource
 def load_assets():
     try:
+        import os
+
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         model = joblib.load("joblib_files/rf.joblib")
         le_area = joblib.load("joblib_files/le_area.joblib")
         le_location = joblib.load("joblib_files/le_location.joblib")
