@@ -1,5 +1,7 @@
 # 🏠 Ahmedabad House Price Prediction
 
+🔗 **Repo:** [ML-Projects/House_Price_Prediction](https://github.com/sujal-chauhan2006/ML-Projects/tree/main/House_Price_Prediction)
+
 A machine learning project that predicts residential property prices (in ₹ Crore) in Ahmedabad, India, based on location, area, property type, and other listing features. The pipeline covers data cleaning, exploratory data analysis, outlier handling, feature engineering, and comparison of 12+ regression models, ending with a tuned ensemble model saved for deployment.
 
 ## 📊 Dataset
@@ -9,6 +11,7 @@ A machine learning project that predicts residential property prices (in ₹ Cro
 - **Original columns:** `name`, `location`, `description`, `rate_per_sqft`, `area_in_sqft`, `area_type`, `property_title`, `property_type`, `bhk_type`, `price_in_cr`
 - **Target variable:** `price_in_cr` (property price in ₹ Crore)
 
+> Note: The dataset file is not included in this repo. Place `ahmendabad_house_price.csv` in the project root (or update the path in the notebook) before running.
 
 ## 🔍 Project Workflow
 
@@ -61,8 +64,8 @@ A machine learning project that predicts residential property prices (in ₹ Cro
 ## 📦 Installation
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo-folder>
+git clone https://github.com/sujal-chauhan2006/ML-Projects.git
+cd ML-Projects/House_Price_Prediction
 pip install -r requirements.txt
 ```
 
