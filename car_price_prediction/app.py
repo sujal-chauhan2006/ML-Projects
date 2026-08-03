@@ -77,10 +77,10 @@ st.write(
 # ---------------------------------------------------
 @st.cache_resource
 def load_files():
-    model = joblib.load("joblib_files/car_price_model.pkl")
-    brand_freq = joblib.load("joblib_files/brand_freq_map.pkl")
-    brand_price = joblib.load("joblib_files/brand_price_map.pkl")
-    clip_bounds = joblib.load("joblib_files/clip_bounds.pkl")
+    model = joblib.load("Joblib_files/car_price_model.pkl")
+    brand_freq = joblib.load("Joblib_files/brand_freq_map.pkl")
+    brand_price = joblib.load("Joblib_files/brand_price_map.pkl")
+    clip_bounds = joblib.load("Joblib_files/clip_bounds.pkl")
     return model, brand_freq, brand_price, clip_bounds
 
 
