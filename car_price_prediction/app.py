@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from pathlib import Path
 
 # ---------------------------------------------------
 # Page Configuration
@@ -76,14 +77,17 @@ st.write(
 # Load Model Files
 # ---------------------------------------------------
 @st.cache_resource
+
 def load_files():
-    model = joblib.load("Joblib_files/car_price_model.pkl")
-    brand_freq = joblib.load("Joblib_files/brand_freq_map.pkl")
-    brand_price = joblib.load("Joblib_files/brand_price_map.pkl")
-    clip_bounds = joblib.load("Joblib_files/clip_bounds.pkl")
-    return model, brand_freq, brand_price, clip_bounds
+    BASE_DIR = Path(__file__).resolve().parent
+    MODEL_DIR = BASE_DIR / "Joblib_files"
 
+    model = joblib.load(MODEL_DIR / "car_price_model.pkl")
+    brand_freq_map = joblib.load(MODEL_DIR / "brand_freq_map.pkl")
+    brand_price_map = joblib.load(MODEL_DIR / "brand_price_map.pkl")
+    clip_bounds = joblib.load(MODEL_DIR / "clip_bounds.pkl")
 
+    return model, brand_freq_map, brand_price_map, clip_bounds
 try:
     model, brand_freq_map, brand_price_map, clip_bounds = load_files()
 except Exception as e:
