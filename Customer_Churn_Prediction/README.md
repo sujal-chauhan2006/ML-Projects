@@ -150,5 +150,3 @@ Through this project, I gained practical experience in:
 Aspiring Machine Learning Engineer
 
 GitHub: https://github.com/sujal-chauhan2006
-
-LinkedIn: *(Add your LinkedIn profile link here)*
