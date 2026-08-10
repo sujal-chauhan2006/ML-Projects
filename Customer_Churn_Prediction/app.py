@@ -74,7 +74,7 @@ st.markdown("""
 # ----------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load(r"Joblib_File\customer_churn_pipeline.joblib")
+    return joblib.load(r"Joblib_File\Model.joblib")
 
 try:
     model = load_model()
@@ -176,7 +176,7 @@ if submitted:
 
     with st.spinner("Analyzing customer data..."):
         prediction = model.predict(customer)[0]
-        probability = model.predict_proba(customer)[0][1]
+        probabilities = model.predict_proba(customer)[0][1]
 
     st.divider()
     st.subheader("🎯 Prediction Result")
@@ -206,13 +206,13 @@ if submitted:
             )
 
     with metric_col1:
-        st.metric("Churn Probability", f"{probability:.1%}")
+        st.metric("Churn Probability", f"{probabilities:.1%}")
 
     with metric_col2:
-        st.metric("Retention Probability", f"{(1 - probability):.1%}")
+        st.metric("Retention Probability", f"{(1 - probabilities):.1%}")
 
     st.write("")
-    st.progress(float(probability), text=f"Churn risk: {probability:.1%}")
+    st.progress(float(probabilities), text=f"Churn risk: {probabilities:.1%}")
 
     with st.expander("📋 View submitted customer data"):
         st.dataframe(customer, use_container_width=True, hide_index=True)
