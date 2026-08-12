@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
-
+from pathlib import Path
 
 # ----------------------------
 # Page configuration
@@ -74,7 +74,8 @@ st.markdown("""
 # ----------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load(r"Joblib_File/Model.joblib")
+    model_path = Path(__file__).parent / "Joblib_File" / "Model.joblib"
+    return joblib.load(model_path)
 
 try:
     model = load_model()
