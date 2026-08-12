@@ -74,7 +74,7 @@ st.markdown("""
 # ----------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load(r"Joblib_File\Model.joblib")
+    return joblib.load(r"Joblib_File/Model.joblib")
 
 try:
     model = load_model()
